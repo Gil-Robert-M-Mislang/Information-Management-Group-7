@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Application Form</title>
+        <link rel="stylesheet" href="css-folder/form.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+        <div class="main-container">
+            <h1 class="title">Scholarship Application Form</h1>
+            <form action="index.php" method="POST">
+                <h2 class="category">Personal Data</h2>
+                <div class="container">
+                        <div class="input-box">
+                            <label for="name">
+                                    Complete Name</label>
+                                <input
+                                    type="text"
+                                    id="name" 
+                                    name="applicant[ApplicantName]"
+                                    placeholder="SN, FN, MI"
+                                    required>
+                        </div>
+
+                        <div class="input-box">
+                            <label for="address">
+                                    Permanent Address</label>
+                                <input
+                                    type="text"
+                                    id="address" 
+                                    name="applicant[PermanentAddress]"
+                                    required>
+                        </div>
+
+                        <div class="input-box">
+                                <label for="dob">
+                                    Date of Birth</label>
+                                <input 
+                                    type="date"
+                                    id="dob" 
+                                    name="applicant[BirthDate]"
+                                    required>
+                        </div>
+
+                        <div class="input-box">
+                            <label for="place-birth">
+                                Place of Birth</label>
+                            <input 
+                                type="text"
+                                id="place-birth" 
+                                name="applicant[BirthPlace]"
+                                required>   
+                        </div>
+
+                        <div class="input-box">
+                            <label for="birth-order">
+                                Order of Birth</label>
+                            <input 
+                                type="text"
+                                id="birth-order" 
+                                name="applicant[BirthOrder]"
+                                required>   
+                        </div>
+
+                        <div class="input-box">
+                            <label for="email-address">
+                            Email Address</label>
+                            <input 
+                                type="email"
+                                id="email-address" 
+                                name="applicant[EmailAddress]"
+                                required
+                                placeholder="email@example.com">  
+                        </div>
+
+                        <div class="input-box">
+
+                            <label for="contact">
+                                Contact Number</label>
+                            <input 
+                                type="text"
+                                id="contact" 
+                                name="applicant[ContactNo]"
+                                required
+                                maxlength="11"
+                                placeholder="09XX-XXX-XXXX">   
+                        </div>
+
+                        <div class="input-box">
+                            <label for="religion">
+                                Religion</label>
+                            <input 
+                                type="text"
+                                id="religion" 
+                                name="applicant[Religion]"
+                                required>   
+                        </div>
+
+                        <div class="input-box">
+                            <label for="Citizenship">
+                                Citizenship</label>
+                            <input 
+                                type="text"
+                                id="citizenship" 
+                                name="applicant[Citizenship]"
+                                required>   
+                        </div>
+
+                        <div class="input-box">
+                            <label>Sex</label>
+                            <div class="box-sex">   
+                                <input 
+                                    type="radio"
+                                    id="female" 
+                                    name="applicant[Sex]"
+                                    required
+                                    value="female"> 
+                                <label for="female">
+                                    Female</label>
+
+                                <input 
+                                    type="radio"
+                                    id="male" 
+                                    name="applicant[Sex]"
+                                    value="male"> 
+                                <label for="male">
+                                    Male</label>
+
+                                <input 
+                                    type="radio"
+                                    id="prefer-not-to-say" 
+                                    name="applicant[Sex]"
+                                    value="prefer not to say"> 
+                                <label for="prefer-not-to-say">
+                                    Prefer not to say</label>
+                            </div> 
+                        </div>
+
+                        <div class="input-box">
+                            <label for="civil-status">
+                                Civil Status</label>
+                            <div class="box-civil-status">   
+                                <input 
+                                    type="radio"
+                                    id="single" 
+                                    name="applicant[CivilStatus]"
+                                    required
+                                    value="Single"> 
+                                <label for="single">
+                                    Single</label>
+
+                                <input 
+                                    type="radio"
+                                    id="married" 
+                                    name="applicant[CivilStatus]"
+                                    value="Married"> 
+                                <label for="married">
+                                    Married</label>
+
+                                <input 
+                                    type="radio"
+                                    id="widowed" 
+                                    name="applicant[CivilStatus]"
+                                    value="Widowed"> 
+                                <label for="widowed">
+                                    Widowed</label>
+                            </div> 
+                        </div>
+
+                        
+                </div>
+                        <div class="input-box indigenous-box">
+                            <label for="indigenous-group">Indigenous Community (Optional):</label>
+                            <input 
+                                type="text"
+                                id="indigenous-group"
+                                name="applicant[IndigenousGroup]"
+                                placeholder="Specify your indigenous group if applicable">
+                        </div>
+
+<!-- EDUC BG -->
+                <h2 class="category">Educational Background</h2>
+                    <div class="container educ">
+
+                        <!-- first row (college) -->
+                        <label for="college-name">College:</label>
+                        <input 
+                            type="text"
+                            id="college-name"
+                            name="school[SchoolName][0]"
+                            required
+                            placeholder="School/University Name">
+                        <input 
+                            type="text"
+                            id="college-address"
+                            name="school[SchoolAddress][0]"
+                            required
+                            placeholder="School/University Address">
+
+                        <label for="course">Course:</label>
+                        <input 
+                            type="text"
+                            id="course"
+                            name="applicant[Course]"
+                            required
+                            placeholder="ex: BS Computer Science">
+
+                        <p></p> 
+
+                        <!-- second row (shs) -->
+                        <label for="shs-name">Senior High School:</label>
+                        <input 
+                            type="text"
+                            id="shs-name"
+                            name="school[SchoolName][1]"
+                            required
+                            placeholder="School Name">
+                        <input 
+                            type="text"
+                            id="shs-address"
+                            name="school[SchoolAddress][1]"
+                            required
+                            placeholder="School Address">
+
+                            <!-- strandd -->
+                        <label for="strand">Strand:</label>
+                        <input 
+                            type="text"
+                            id="strand"
+                            name="applicant[SHSStrand]"
+                            required
+                            placeholder="ex: STEM">
+
+                        <p></p>
+
+                        <!-- second row (jhs) -->
+                        <label for="jhs-name">Junior High School:</label>
+                        <input 
+                            type="text"
+                            id="jhs-name"
+                            name="school[SchoolName][2]"
+                            required
+                            placeholder="School Name">
+                        <input 
+                            type="text"
+                            id="jhs-address"
+                            name="school[SchoolAddress][2]"
+                            required
+                            placeholder="School Address">
+
+                        <!-- second row (jhs) -->
+                        <label for="elementary-name">Elementary School:</label>
+                        <input 
+                            type="text"
+                            id="elementary-name"
+                            name="school[SchoolName][3]"
+                            required
+                            placeholder="School Name">
+                        <input 
+                            type="text"
+                            id="elementary-address"
+                            name="school[SchoolAddress][3]"
+                            required
+                            placeholder="School Address">
+                    </div>
+<!-- Parents -->
+                <h2 class="category">Parents or Legal Guardian</h2>
+                <p class="note">Please provide information for at least one parent or guardian.</p>
+                    <div class="container parent-guardian">
+
+                        <!-- parent/guardian 1 -->
+                        <label for="pg1-name">Parent/Guardian 1:</label>
+                        <input 
+                            type="text"
+                            id="pg1-name"
+                            name="parentguardian[ParentGuardianName][0]"
+                            placeholder="Complete Name (SN, FN, MI)"
+                            required>
+                        <input 
+                            type="text"
+                            id="pg1-relationship"
+                            name="applicantguardian[Relationship][0]"
+                            placeholder="Relationship to Applicant"
+                            required>
+                        <input 
+                            type="text"
+                            id="pg1-address"
+                            name="parentguardian[Address][0]"
+                            placeholder="Address"
+                            required>
+
+                        <div></div>
+
+                        <input 
+                            type="text"
+                            id="pg1-education"
+                            name="parentguardian[EducationalAttainment][0]"
+                            placeholder="Educational Attainment"
+                            required>
+                        <input 
+                            type="text"
+                            id="pg1-occupation"
+                            name="parentguardian[Occupation][0]"
+                            placeholder="Occupation"
+                            required>
+                        <div class="income-earner">
+                            <span class="income-label">Is Income Earner?</span>
+                            <div class="radio-group">
+                                <input 
+                                    type="radio"
+                                    id="pg1-earner-yes"
+                                    name="applicantguardian[IsIncomeEarner][0]"
+                                    value="Yes"
+                                    required>
+                                <label for="pg1-earner-yes">Yes</label>
+                                <input 
+                                    type="radio"
+                                    id="pg1-earner-no"
+                                    name="applicantguardian[IsIncomeEarner][0]"
+                                    value="No">
+                                <label for="pg1-earner-no">No</label>
+                            </div>
+                        </div>
+                        
+                        <!-- parent/guardian 2 -->
+                        <label for="pg2-name">Parent/Guardian 2:</label>
+                        <input 
+                            type="text"
+                            id="pg2-name"
+                            name="parentguardian[ParentGuardianName][1]"
+                            placeholder="Complete Name (SN, FN, MI)">
+                        <input 
+                            type="text"
+                            id="pg2-relationship"
+                            name="applicantguardian[Relationship][1]"
+                            placeholder="Relationship to Applicant">
+                        <input 
+                            type="text"
+                            id="pg2-address"
+                            name="parentguardian[Address][1]"
+                            placeholder="Address">
+
+                         <div></div>
+
+                        <input 
+                            type="text"
+                            id="pg2-education"
+                            name="parentguardian[EducationalAttainment][1]"
+                            placeholder="Educational Attainment">
+                        <input 
+                            type="text"
+                            id="pg2-occupation"
+                            name="parentguardian[Occupation][1]"
+                            placeholder="Occupation">
+                        <div class="income-earner">
+                            <span class="income-label">Is Income Earner?</span>
+                            <div class="radio-group">
+                                <input 
+                                    type="radio"
+                                    id="pg2-earner-yes"
+                                    name="applicantguardian[IsIncomeEarner][1]"
+                                    value="Yes">
+                                <label for="pg2-earner-yes">Yes</label>
+                                <input 
+                                    type="radio"
+                                    id="pg2-earner-no"
+                                    name="applicantguardian[IsIncomeEarner][1]"
+                                    value="No">
+                                <label for="pg2-earner-no">No</label>
+                            </div>
+                        </div>
+                        
+                        <!-- parent/guardian 3 -->
+                        <label for="pg3-name">Parent/Guardian 3:</label>
+                        <input 
+                            type="text"
+                            id="pg3-name"
+                            name="parentguardian[ParentGuardianName][2]"
+                            placeholder="Complete Name (SN, FN, MI)">
+                        <input 
+                            type="text"
+                            id="pg3-relationship"
+                            name="applicantguardian[Relationship][2]"
+                            placeholder="Relationship to Applicant">
+                        <input 
+                            type="text"
+                            id="pg3-address"
+                            name="parentguardian[Address][2]"
+                            placeholder="Address">
+
+                         <div></div>
+
+                        <input 
+                            type="text"
+                            id="pg3-education"
+                            name="parentguardian[EducationalAttainment][2]"
+                            placeholder="Educational Attainment">
+                        <input 
+                            type="text"
+                            id="pg3-occupation"
+                            name="parentguardian[Occupation][2]"
+                            placeholder="Occupation">
+                        <div class="income-earner">
+                            <span class="income-label">Is Income Earner?</span>
+                            <div class="radio-group">
+                                <input 
+                                    type="radio"
+                                    id="pg3-earner-yes"
+                                    name="applicantguardian[IsIncomeEarner][2]"
+                                    value="Yes">
+                                <label for="pg3-earner-yes">Yes</label>
+                                <input 
+                                    type="radio"
+                                    id="pg3-earner-no"
+                                    name="applicantguardian[IsIncomeEarner][2]"
+                                    value="No">
+                                <label for="pg3-earner-no">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                <h2 class="category">Socio-Economic Background</h2>
+                    <div class="container socio-economic">
+
+                    <!-- house ownership-->
+                        <label class="main-label">
+                            House Ownership Status</label>
+                        <div>
+                            <input 
+                                type="radio"
+                                id="owned"
+                                name="applicant[HouseOwnership]"
+                                value="Owned">
+                            <label for="owned">Owned</label>
+                        </div>
+
+                        <div>
+                            <input 
+                                type="radio"
+                                id="rented"
+                                name="applicant[HouseOwnership]"
+                                value="Rented">
+                            <label for="rented">Rented</label>
+                        </div>
+
+                        <div>
+                            <input 
+                                type="radio"
+                                id="living-with-relatives"
+                                name="applicant[HouseOwnership]"
+                                value="Living with Relatives">
+                            <label for="living-with-relatives">Living with Relatives</label>
+                        </div>
+
+                        <div>
+                            <input 
+                                type="radio"
+                                id="amortized"
+                                name="applicant[HouseOwnership]"
+                                value="Amortized / Mortgaged">
+                            <label for="amortized">Amortized / Mortgaged</label>
+                        </div>
+
+                        <div>
+                            <input 
+                                type="radio"
+                                id="others-house-own"
+                                name="applicant[HouseOwnership]"
+                                value="Others">
+                            <label for="others-house-own">Others</label>
+                        </div> 
+                    </div>
+
+                        <div class="dropdown">
+                            <label for="monthly-income">Gross Monthly Family Income</label>
+                            <select id="monthly-income" name="applicant[GrossMonthlyFamilyIncome]" required>
+                                <option value="" disabled selected>Select option</option>
+                                <option value="below-20,000">Below 20,000</option>
+                                <option value="20,000-39,999">20,000 to 39,999</option>
+                                <option value="40,000-59,999">40,000 to 59,999</option>
+                                <option value="60,000-above">60,000 and above</option>
+                            </select>
+                        </div>
+                <div class="buttons">
+                    <button type="submit" class="submit">Submit</button>
+                    <button type="reset" class="reset">Reset</button>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

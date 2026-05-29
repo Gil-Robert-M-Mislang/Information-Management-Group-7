@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Application Form</title>
+    <link rel="stylesheet" href="css-folder/styles.css" />
+  </head>
+
+  <body>
+    <header class="page-header">
+      <h1>College Scholarship Application System</h1>
+    </header>
+
+    <div class="table-controls">
+      <div class="controls-left">
+        <a class="nav-button" href="index.html" target="_self">
+          + New Applicant
+        </a>
+      </div>
+
+      <div class="controls-right">
+        <label class="nav-field">
+          Search:
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Search by name or ID"
+          />
+        </label>
+
+        <label class="nav-field">
+          Sort by:
+          <select id="sortSelect">
+            <option value="id">ID</option>
+            <option value="name">Name</option>
+            <option value="contactNumber">Contact Number</option>
+            <option value="email">Email Address</option>
+          </select>
+        </label>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table id="studentTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Contact Number</th>
+            <th>Email Address</th>
+            <th class="actions-header">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody id="studentTableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="pagination-container">
+      <button id="prevBtn" class="pagination-btn">Previous</button>
+
+      <span id="pageInfo"> Page 1 </span>
+
+      <button id="nextBtn" class="pagination-btn">Next</button>
+    </div>
+    <script>
+      const selectElement = document.getElementById("sortSelect");
+
+      const searchElement = document.getElementById("searchInput");
+
+      let currentPage = 1;
+
+      function loadPage(page) {
+        const chosenValue = selectElement.value;
+
+        const searchInput = searchElement.value;
+
+        fetch(
+          "read.php?page=" +
+            page +
+            "&searchInput=" +
+            searchInput +
+            "&sortSelect=" +
+            chosenValue,
+        )
+          .then((response) => response.text())
+
+          .then((data) => {
+            document.getElementById("studentTableBody").innerHTML = data;
+
+            if (!data.includes("No Records Found")) {
+              currentPage = page;
+
+              document.getElementById("pageInfo").textContent =
+                "Page " + currentPage;
+            }
+          });
+      }
+
+      loadPage(currentPage);
+
+      selectElement.addEventListener("change", () => {
+        currentPage = 1;
+
+        loadPage(currentPage);
+      });
+
+      searchElement.addEventListener("input", () => {
+        currentPage = 1;
+
+        loadPage(currentPage);
+      });
+
+      document.getElementById("nextBtn").addEventListener("click", () => {
+        loadPage(currentPage + 1);
+      });
+
+      document.getElementById("prevBtn").addEventListener("click", () => {
+        if (currentPage > 1) {
+          loadPage(currentPage - 1);
+        }
+      });
+
+
+      // Delete functionality
+      document.getElementById("studentTableBody").addEventListener("click", (e) => {
+        if (e.target.classList.contains("delete-btn")) {
+          const applicantId = e.target.dataset.id;
+
+          if (confirm("Are you sure you want to delete this record?")) {
+            fetch("delete.php", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: "ApplicantID=" + applicantId,
+            })
+              .then((response) => response.text())
+              .then((data) => {
+                alert(data);
+
+                loadPage(currentPage);
+              });
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
