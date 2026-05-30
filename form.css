@@ -1,0 +1,487 @@
+p,h1,h2{
+    margin:0;
+}
+
+body {
+    background-color: #f4f6f4;
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+    padding: 2rem 1.5rem;
+}
+
+.table{
+    margin: 0 auto;
+}
+
+.title{
+    color: rgb(53, 53, 53);
+    text-align: center;
+    padding-top: 1rem;
+    font-size: 2rem;
+}
+
+.category{
+    background-color: rgb(88, 145, 126);
+    color: rgb(255, 255, 255);
+    border-radius: 0.2rem;
+    padding: 0.2rem 1rem;
+    margin-bottom: 1rem;
+    margin-top: 1.5rem;
+    font-size: 1.3rem;
+}
+
+html{
+    margin: 1.5rem 0rem;
+    font-size: 20px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+input{
+    border: 2px solid rgb(88, 145, 126);
+    border-radius: 0.2rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+select {
+    min-height: 2.1rem;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    cursor: pointer;
+}
+
+select {
+    cursor: pointer;
+}
+
+.main-container{
+    color: w;
+    width: 60rem;
+    border: 4px solid transparent;
+    border-radius: 0.5rem;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    background-color: white;
+    box-shadow: 0 2px 16px rgba(67, 79, 67, 0.12);
+}
+
+.container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap:1.5rem;
+    margin-bottom: 1rem;
+}
+
+.input-box{
+    display: flex;
+    flex-direction: column;
+    gap:0.3rem;
+}
+
+.input-box label{
+    font-size: 1rem;
+    color: rgb(82, 82, 82);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+}
+
+.input-box input{
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 0.4rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 0.8rem;
+    color: rgb(82, 82, 82);
+    height: 1.5rem;
+}
+
+
+.box-sex, .box-civil-status{
+    display: flex;
+    gap:0.3rem
+}
+
+.box-sex label, .box-civil-status label{
+    font-size: 1rem;
+    font-weight: 400;
+    align-content: center;
+}
+
+.box-sex input, .box-civil-status input{ 
+    width:1.2rem;
+    height:1.2rem;
+    margin:0;
+    margin-left: 0.1rem;
+    cursor: pointer;
+}
+
+.input-box.indigenous-box{
+    display: flex;
+    flex-direction: column;
+    gap:0.3rem;
+    margin-top: 1.5rem;
+}
+
+.indigenous-box label{
+    font-size: 1rem;
+    color: rgb(82, 82, 82);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+}
+
+.indigenous-box input{
+    width: 50%;
+    box-sizing: border-box;
+    padding-left: 0.4rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 0.8rem;
+    color: rgb(82, 82, 82);
+    height: 1.5rem;
+}
+
+.submit{
+    background-color: rgb(88, 145, 126);
+    border: none;
+    color: aliceblue;
+    font-size: 1.2rem;
+    padding:0.5rem 1rem;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    min-height: 2.5rem;
+}
+
+.submit:hover{
+    background-color: rgb(75, 125, 108);
+}
+
+.submit:active{
+    background-color: rgb(65, 110, 95);
+}
+
+.reset{
+    background-color: rgb(145, 91, 88);
+    border: none;
+    color: aliceblue;
+    font-size: 1.2rem;
+    padding:0.5rem 1rem;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    min-height: 2.5rem;
+}
+
+.reset:hover{
+    background-color: rgb(125, 75, 72);
+}
+
+.reset:active{
+    background-color: rgb(110, 65, 62);
+}
+
+.buttons{
+    display: flex;
+    justify-content: flex-end;
+    gap:0.5rem;
+}
+
+.note{
+    font-size: 0.9rem;
+    color: rgb(100, 100, 100);
+    font-style: italic;
+    margin-bottom: 1rem;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* EDUC BG */
+.container.educ{
+    font-size: 1rem;
+    color: rgb(82, 82, 82);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    grid-template-columns: 10rem 1fr 1fr;
+    gap:0.7rem
+}
+
+.educ input{
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 0.4rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 0.8rem;
+    color: rgb(82, 82, 82);
+    height: 1.5rem;
+}
+
+/* PARENT-GUARDIAN */
+
+.container.parent-guardian{
+    font-size: 1rem;
+    color: rgb(82, 82, 82);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    grid-template-columns: 10rem 1fr 1fr 1fr ;
+    gap:0.7rem;
+    align-items: center;
+}
+
+.parent-guardian input{
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 0.4rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 0.8rem;
+    color: rgb(82, 82, 82);
+    height: 1.5rem;
+}
+
+.income-earner{
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.income-label{
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgb(82, 82, 82);
+}
+
+.radio-group{
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.radio-group input{
+    width: 1.2rem;
+    height: 1rem;
+    margin: 0;
+    cursor: pointer;
+}
+
+.radio-group label{
+    font-size: 0.85rem;
+    font-weight: 400;
+}
+
+/* SOCIO-ECONOMIC */
+
+.container.socio-economic{
+    font-size: 1rem;
+    color: rgb(82, 82, 82);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    grid-template-columns: 10rem 1fr 1fr 1fr 1fr 1fr;
+    gap:0.7rem
+}
+
+.container.socio-economic{
+    font-size: 1rem;
+    font-weight: 400;
+    align-content: center;
+}
+
+.container.socio-economic input[type="radio"],
+.container.socio-economic input[type="checkbox"]{
+    width: 1.2rem;
+    height: 1rem;
+    cursor: pointer;
+}
+
+.main-label{
+    font-size: 1rem;
+    color: rgb(82, 82, 82);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+}
+
+.dropdown{
+    font-size: 1rem;
+    color: rgb(82, 82, 82);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    gap:0.5rem;
+    
+}
+
+.dropdown option{
+    font-size: 0.7rem;
+    color: rgb(82, 82, 82);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.dropdown select{
+    color: rgb(82, 82, 82);
+    height: 1.5rem;
+    width: 20%;
+    font-size: 0.9rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    padding-left: 0.3rem;
+
+    border: 2px solid rgb(88, 145, 126);
+    border-radius: 0.2rem;
+}
+
+
+@media (max-width: 768px) {
+    html{
+        font-size: 16px;
+    }
+
+    body {
+        padding: 1rem 0.5rem;
+    }
+
+    .main-container{
+        width: 100%;
+        border: 3px solid rgb(88, 145, 126);
+        box-sizing: border-box;
+        padding: 1rem 1rem;
+    }
+
+    .title{
+        font-size: 1.6rem;
+        padding-top: 0.5rem;
+    }
+
+    .category{
+        font-size: 1.1rem;
+        margin-top: 1.2rem;
+    }
+
+    .container {
+        grid-template-columns: 1fr 1fr;
+        gap:1rem;
+    }
+
+    .container.educ{
+        grid-template-columns: 1fr;
+        gap:0.7rem;
+    }
+
+    .container.parent-guardian{
+        grid-template-columns: 1fr;
+        gap:0.7rem;
+    }
+
+    .container.socio-economic{
+        grid-template-columns: 1fr 1fr 1fr;
+        gap:0.7rem;
+    }
+
+    .indigenous-box input{
+        width: 100%;
+    }
+
+    .dropdown{
+        display: flex;
+        flex-direction: column;
+        gap:0.5rem;
+    }
+
+    .dropdown select{
+        width: 60%;
+    }
+
+    .box-sex, .box-civil-status{
+        flex-direction: column;
+        align-items: flex-start;
+        gap:0.5rem;
+    }
+
+    .box-sex input, .box-civil-status input{
+        margin-left: 0;
+    }
+
+    .buttons{
+        flex-direction: column;
+    }
+
+    .submit, .reset{
+        width: 100%;
+        padding: 0.4rem;
+    }
+}
+
+@media (max-width: 650px) {
+    html{
+        font-size: 15px;
+    }
+
+    body {
+        padding: 0.5rem 0.3rem;
+    }
+
+    .main-container{
+        padding: 0.8rem 0.8rem;
+    }
+
+    .title{
+        font-size: 1.4rem;
+    }
+
+    .category{
+        font-size: 1rem;
+        padding: 0.2rem 0.7rem;
+        margin-top: 1rem;
+    }
+
+    .container{
+        grid-template-columns: 1fr;
+        gap:1rem;
+    }
+
+    .box-sex, .box-civil-status{
+        flex-direction: row;
+    }
+
+    .container.educ{
+        grid-template-columns: 1fr;
+        gap:0.7rem;
+    }
+
+    .container.parent-guardian{
+        grid-template-columns: 1fr;
+        gap:0.7rem;
+    }
+
+    .container.socio-economic{
+        grid-template-columns: 1fr;
+        gap:0.7rem;
+    }
+
+    .main-label{
+        font-size: 0.95rem;
+    }
+
+    .indigenous-box{
+        flex-direction: column;
+    }
+
+    .indigenous-box input{
+        width: 100%;
+    }
+
+    .dropdown select{
+        width: 100%;
+    }
+
+    .note{
+        font-size: 0.85rem;
+    }
+
+    .income-earner{
+        margin-top: 0.3rem;
+    }
+
+    .radio-group{
+        flex-direction: row;
+        gap: 1rem;
+    }
+}
