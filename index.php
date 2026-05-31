@@ -95,57 +95,6 @@
 
 
         /*
-            APPLICANT GUARDIAN SECTION
-        */
-
-        $applicantGuardianCount = count($_POST['applicantguardian']['Relationship']);
-
-        for($i = 0; $i < $applicantGuardianCount; $i++) {
-
-            $relationship = $_POST['applicantguardian']['Relationship'][$i] ?? '';
-
-            $isIncomeEarner = $_POST['applicantguardian']['IsIncomeEarner'][$i] ?? '';
-
-            $searchApplicantGuardian = mysqli_query(
-                $conn,
-                "SELECT *
-                FROM applicantguardian
-                WHERE ApplicantID = '$ApplicantID'
-                AND ParentGuardianID = '" . $parentGuardianIDs[$i] . "'"
-            );
-
-            if(mysqli_num_rows($searchApplicantGuardian) > 0) {
-
-                echo "Existing ApplicantGuardian record found for ApplicantID: "
-                . $ApplicantID .
-                " and ParentGuardianID: "
-                . $parentGuardianIDs[$i] .
-                "<br>";
-
-            } else {
-
-                echo $ApplicantID . " - " . $parentGuardianIDs[$i] . "<br>";
-                $IsIncomeEarner = isset($_POST['applicantguardian']['IsIncomeEarner'][$i]) ? 1 : 0;
-
-                $insertApplicantGuardian = $conn->prepare(
-                    "INSERT INTO applicantguardian
-                    (" . $allowedFields['applicantguardian'] . ")
-                    VALUES (?, ?, ?, ?)"
-                );
-
-                $insertApplicantGuardian->bind_param(
-                    "ssss",
-                    $ApplicantID,
-                    $parentGuardianIDs[$i],
-                    $relationship,
-                    $IsIncomeEarner
-                );
-
-                $insertApplicantGuardian->execute();
-            }
-        }
-
-        /*
             SCHOOL SECTION
         */
 
@@ -222,6 +171,58 @@
             $ElemID
         );
         $insertApplicant->execute();
+
+        
+        /*
+            APPLICANT GUARDIAN SECTION
+        */
+
+        $applicantGuardianCount = count($_POST['applicantguardian']['Relationship']);
+
+        for($i = 0; $i < $applicantGuardianCount; $i++) {
+
+            $relationship = $_POST['applicantguardian']['Relationship'][$i] ?? '';
+
+            $isIncomeEarner = $_POST['applicantguardian']['IsIncomeEarner'][$i] ?? '';
+
+            $searchApplicantGuardian = mysqli_query(
+                $conn,
+                "SELECT *
+                FROM applicantguardian
+                WHERE ApplicantID = '$ApplicantID'
+                AND ParentGuardianID = '" . $parentGuardianIDs[$i] . "'"
+            );
+
+            if(mysqli_num_rows($searchApplicantGuardian) > 0) {
+
+                echo "Existing ApplicantGuardian record found for ApplicantID: "
+                . $ApplicantID .
+                " and ParentGuardianID: "
+                . $parentGuardianIDs[$i] .
+                "<br>";
+
+            } else {
+
+                echo $ApplicantID . " - " . $parentGuardianIDs[$i] . "<br>";
+                $IsIncomeEarner = isset($_POST['applicantguardian']['IsIncomeEarner'][$i]) ? 1 : 0;
+
+                $insertApplicantGuardian = $conn->prepare(
+                    "INSERT INTO applicantguardian
+                    (" . $allowedFields['applicantguardian'] . ")
+                    VALUES (?, ?, ?, ?)"
+                );
+
+                $insertApplicantGuardian->bind_param(
+                    "ssss",
+                    $ApplicantID,
+                    $parentGuardianIDs[$i],
+                    $relationship,
+                    $IsIncomeEarner
+                );
+
+                $insertApplicantGuardian->execute();
+            }
+        }
 
         $conn->commit();
         mysqli_close($conn);

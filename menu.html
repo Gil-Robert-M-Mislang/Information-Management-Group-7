@@ -64,6 +64,15 @@
 
       <button id="nextBtn" class="pagination-btn">Next</button>
     </div>
+     
+    <!-- Modal structure -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal-box">
+        <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+        <div id="modalContent">Loading...</div>
+      </div>
+    </div>
+
     <script>
       const selectElement = document.getElementById("sortSelect");
 
@@ -87,14 +96,13 @@
           .then((response) => response.text())
 
           .then((data) => {
-            document.getElementById("studentTableBody").innerHTML = data;
-
-            if (!data.includes("No Records Found")) {
-              currentPage = page;
-
-              document.getElementById("pageInfo").textContent =
-                "Page " + currentPage;
+            if (data.includes("No Records Found")) {
+              return; 
             }
+
+            document.getElementById("studentTableBody").innerHTML = data;
+            currentPage = page;
+            document.getElementById("pageInfo").textContent = "Page " + currentPage;
           });
       }
 
@@ -122,9 +130,54 @@
         }
       });
 
+      // modal functionalities
+      function openModal(html) {
+        document.getElementById("modalContent").innerHTML = html;
+        document.getElementById("modalOverlay").classList.add("active");
+      }
 
-      // Delete functionality
+      function closeModal() {
+        document.getElementById("modalOverlay").classList.remove("active");
+        document.getElementById("modalContent").innerHTML = "Loading...";
+      }
+
+      document.getElementById("modalOverlay").addEventListener("click", function(e) {
+        if (e.target === this) closeModal();
+      });
+
+      // button functionalities
       document.getElementById("studentTableBody").addEventListener("click", (e) => {
+
+        // view
+        if (e.target.classList.contains("view-btn")){
+          const applicantId = e.target.dataset.id;
+          fetch("view.php?id=" + applicantId)
+            .then(r =>r.text())
+            .then(html =>openModal(html)); 
+        }
+
+        // edit
+
+        if (e.target.classList.contains("edit-btn")) {
+          const applicantId = e.target.dataset.id;
+          fetch("edit.php?id=" + applicantId)
+            .then(r => r.text())
+            .then(html => {
+              openModal(html);
+              document.getElementById("editForm").addEventListener("submit", function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                fetch("update.php", { method: "POST", body: formData })
+                  .then(() => {
+                    closeModal();
+                    loadPage(currentPage);
+                    alert("Applicant updated successfully!");
+                  });
+              });
+            });
+        }
+
+        // delete
         if (e.target.classList.contains("delete-btn")) {
           const applicantId = e.target.dataset.id;
 
