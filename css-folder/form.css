@@ -309,7 +309,7 @@ select {
     
 }
 
-.dropdown option{
+.dropdown option, .dropdown-applicant option{
     font-size: 0.7rem;
     color: rgb(82, 82, 82);
     font-family: Arial, Helvetica, sans-serif;
@@ -320,6 +320,18 @@ select {
     color: rgb(82, 82, 82);
     height: 1.5rem;
     width: 20%;
+    font-size: 0.9rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    padding-left: 0.3rem;
+
+    border: 2px solid rgb(88, 145, 126);
+    border-radius: 0.2rem;
+}
+
+.dropdown-applicant select{
+    color: rgb(82, 82, 82);
+    height: 1.5rem;
+    width: 100%;
     font-size: 0.9rem;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     padding-left: 0.3rem;
