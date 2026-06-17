@@ -15,11 +15,11 @@ $applicantQuery = mysqli_query($conn, "
         s.SchoolName AS SHSName, s.SchoolAddress AS SHSAddress,
         j.SchoolName AS JHSName, j.SchoolAddress AS JHSAddress,
         e.SchoolName AS ElemName, e.SchoolAddress AS ElemAddress
-    FROM applicant a
-    LEFT JOIN school c ON a.CollegeID = c.SchoolID
-    LEFT JOIN school s ON a.SHSID = s.SchoolID
-    LEFT JOIN school j ON a.JHSID = j.SchoolID
-    LEFT JOIN school e ON a.ElemID = e.SchoolID
+    FROM applicant_t a
+    LEFT JOIN school_t c ON a.CollegeID = c.SchoolID
+    LEFT JOIN school_t s ON a.SHSID = s.SchoolID
+    LEFT JOIN school_t j ON a.JHSID = j.SchoolID
+    LEFT JOIN school_t e ON a.ElemID = e.SchoolID
     WHERE a.ApplicantID = '$id'
 ");
 
@@ -33,8 +33,8 @@ if (!$a) {
 // Fetch guardians
 $guardianQuery = mysqli_query($conn, "
     SELECT pg.*, ag.Relationship, ag.IsIncomeEarner
-    FROM parentguardian pg
-    JOIN applicantguardian ag ON pg.ParentGuardianID = ag.ParentGuardianID
+    FROM parentguardian_t pg
+    JOIN applicantguardian_t ag ON pg.ParentGuardianID = ag.ParentGuardianID
     WHERE ag.ApplicantID = '$id'
 ");
 
@@ -54,27 +54,27 @@ while ($row = mysqli_fetch_assoc($guardianQuery)) {
         <div class="view-grid">
             <div class="view-field">
                 <label class="view-label">Complete Name</label>
-                <input class="edit-input" type="text" name="applicant[ApplicantName]" value="<?= htmlspecialchars($a['ApplicantName']) ?>" required>
+                <input class="edit-input" type="text" name="applicant_t[ApplicantName]" value="<?= htmlspecialchars($a['ApplicantName']) ?>" required>
             </div>
             <div class="view-field">
                 <label class="view-label">Permanent Address</label>
-                <input class="edit-input" type="text" name="applicant[PermanentAddress]" value="<?= htmlspecialchars($a['PermanentAddress']) ?>" required>
+                <input class="edit-input" type="text" name="applicant_t[PermanentAddress]" value="<?= htmlspecialchars($a['PermanentAddress']) ?>" required>
             </div>
             <div class="view-field">
                 <label class="view-label">Date of Birth</label>
-                <input class="edit-input" type="date" name="applicant[BirthDate]" value="<?= htmlspecialchars($a['BirthDate']) ?>" required>
+                <input class="edit-input" type="date" name="applicant_t[BirthDate]" value="<?= htmlspecialchars($a['BirthDate']) ?>" required>
             </div>
             <div class="view-field">
                 <label class="view-label">Place of Birth</label>
-                <input class="edit-input" type="text" name="applicant[BirthPlace]" value="<?= htmlspecialchars($a['BirthPlace']) ?>" required>
+                <input class="edit-input" type="text" name="applicant_t[BirthPlace]" value="<?= htmlspecialchars($a['BirthPlace']) ?>" required>
             </div>
             <div class="view-field">
                 <label class="view-label">Birth Order</label>
-                <input class="edit-input" type="text" name="applicant[BirthOrder]" value="<?= htmlspecialchars($a['BirthOrder']) ?>" required>
+                <input class="edit-input" type="text" name="applicant_t[BirthOrder]" value="<?= htmlspecialchars($a['BirthOrder']) ?>" required>
             </div>
             <div class="view-field">
                 <label class="view-label">Email Address</label>
-                <input class="edit-input" type="email" name="applicant[EmailAddress]" 
+                <input class="edit-input" type="email" name="applicant_t[EmailAddress]" 
                     value="<?= htmlspecialchars($a['EmailAddress']) ?>"
                     readonly
                     style="background:#f0f0f0; cursor:not-allowed; opacity:0.7;"
@@ -82,7 +82,7 @@ while ($row = mysqli_fetch_assoc($guardianQuery)) {
             </div>
             <div class="view-field">
                 <label class="view-label">Contact Number</label>
-                <input class="edit-input" type="text" name="applicant[ContactNo]" 
+                <input class="edit-input" type="text" name="applicant_t[ContactNo]" 
                     value="<?= htmlspecialchars($a['ContactNo']) ?>"
                     pattern="\d{11}" maxlength="11" title="Contact number must be exactly 11 digits"
                     inputmode="numeric" oninput="this.value=this.value.replace(/\D/g,'')"
@@ -90,18 +90,18 @@ while ($row = mysqli_fetch_assoc($guardianQuery)) {
             </div>
             <div class="view-field">
                 <label class="view-label">Citizenship</label>
-                <input class="edit-input" type="text" name="applicant[Citizenship]" value="<?= htmlspecialchars($a['Citizenship']) ?>" required>
+                <input class="edit-input" type="text" name="applicant_t[Citizenship]" value="<?= htmlspecialchars($a['Citizenship']) ?>" required>
             </div>
             <div class="view-field">
                 <label class="view-label">Indigenous Group</label>
-                <input class="edit-input" type="text" name="applicant[IndigenousGroup]" value="<?= htmlspecialchars($a['IndigenousGroup']) ?>">
+                <input class="edit-input" type="text" name="applicant_t[IndigenousGroup]" value="<?= htmlspecialchars($a['IndigenousGroup']) ?>">
             </div>
             <div class="view-field">
                 <label class="view-label">Sex</label>
                 <div class="radio-group-edit">
                     <?php foreach (['Female','Male','Prefer not to say'] as $opt): ?>
                     <label>
-                        <input type="radio" name="applicant[Sex]" value="<?= $opt ?>" <?= strtolower($a['Sex']) === strtolower($opt) ? 'checked' : '' ?>>
+                        <input type="radio" name="applicant_t[Sex]" value="<?= $opt ?>" <?= strtolower($a['Sex']) === strtolower($opt) ? 'checked' : '' ?>>
                         <?= $opt ?>
                     </label>
                     <?php endforeach; ?>
@@ -112,7 +112,7 @@ while ($row = mysqli_fetch_assoc($guardianQuery)) {
                 <div class="radio-group-edit">
                     <?php foreach (['Single','Married','Widowed'] as $opt): ?>
                     <label>
-                        <input type="radio" name="applicant[CivilStatus]" value="<?= $opt ?>" <?= $a['CivilStatus'] === $opt ? 'checked' : '' ?>>
+                        <input type="radio" name="applicant_t[CivilStatus]" value="<?= $opt ?>" <?= $a['CivilStatus'] === $opt ? 'checked' : '' ?>>
                         <?= $opt ?>
                     </label>
                     <?php endforeach; ?>
@@ -126,43 +126,43 @@ while ($row = mysqli_fetch_assoc($guardianQuery)) {
         <div class="view-grid">
             <div class="view-field">
                 <label class="view-label">College Name</label>
-                <input class="edit-input" type="text" name="school[SchoolName][0]" value="<?= htmlspecialchars($a['CollegeName']) ?>" required>
+                <input class="edit-input" type="text" name="school_t[SchoolName][0]" value="<?= htmlspecialchars($a['CollegeName']) ?>" required>
             </div>
             <div class="view-field">
                 <label class="view-label">College Address</label>
-                <input class="edit-input" type="text" name="school[SchoolAddress][0]" value="<?= htmlspecialchars($a['CollegeAddress']) ?>" required>
+                <input class="edit-input" type="text" name="school_t[SchoolAddress][0]" value="<?= htmlspecialchars($a['CollegeAddress']) ?>" required>
             </div>
             <div class="view-field">
                 <label class="view-label">Course</label>
-                <input class="edit-input" type="text" name="applicant[Course]" value="<?= htmlspecialchars($a['Course']) ?>" required>
+                <input class="edit-input" type="text" name="applicant_t[Course]" value="<?= htmlspecialchars($a['Course']) ?>" required>
             </div>
             <div class="view-field">
                 <label class="view-label">Senior High School</label>
-                <input class="edit-input" type="text" name="school[SchoolName][1]" value="<?= htmlspecialchars($a['SHSName']) ?>" required>
+                <input class="edit-input" type="text" name="school_t[SchoolName][1]" value="<?= htmlspecialchars($a['SHSName']) ?>" required>
             </div>
             <div class="view-field">
                 <label class="view-label">SHS Address</label>
-                <input class="edit-input" type="text" name="school[SchoolAddress][1]" value="<?= htmlspecialchars($a['SHSAddress']) ?>" required>
+                <input class="edit-input" type="text" name="school_t[SchoolAddress][1]" value="<?= htmlspecialchars($a['SHSAddress']) ?>" required>
             </div>
             <div class="view-field">
                 <label class="view-label">SHS Strand</label>
-                <input class="edit-input" type="text" name="applicant[SHSStrand]" value="<?= htmlspecialchars($a['SHSStrand']) ?>" required>
+                <input class="edit-input" type="text" name="applicant_t[SHSStrand]" value="<?= htmlspecialchars($a['SHSStrand']) ?>" required>
             </div>
             <div class="view-field">
                 <label class="view-label">Junior High School</label>
-                <input class="edit-input" type="text" name="school[SchoolName][2]" value="<?= htmlspecialchars($a['JHSName']) ?>" required>
+                <input class="edit-input" type="text" name="school_t[SchoolName][2]" value="<?= htmlspecialchars($a['JHSName']) ?>" required>
             </div>
             <div class="view-field">
                 <label class="view-label">JHS Address</label>
-                <input class="edit-input" type="text" name="school[SchoolAddress][2]" value="<?= htmlspecialchars($a['JHSAddress']) ?>" required>
+                <input class="edit-input" type="text" name="school_t[SchoolAddress][2]" value="<?= htmlspecialchars($a['JHSAddress']) ?>" required>
             </div>
             <div class="view-field">
                 <label class="view-label">Elementary School</label>
-                <input class="edit-input" type="text" name="school[SchoolName][3]" value="<?= htmlspecialchars($a['ElemName']) ?>" required>
+                <input class="edit-input" type="text" name="school_t[SchoolName][3]" value="<?= htmlspecialchars($a['ElemName']) ?>" required>
             </div>
             <div class="view-field">
                 <label class="view-label">Elementary Address</label>
-                <input class="edit-input" type="text" name="school[SchoolAddress][3]" value="<?= htmlspecialchars($a['ElemAddress']) ?>" required>
+                <input class="edit-input" type="text" name="school_t[SchoolAddress][3]" value="<?= htmlspecialchars($a['ElemAddress']) ?>" required>
             </div>
         </div>
     </div>
@@ -175,7 +175,7 @@ while ($row = mysqli_fetch_assoc($guardianQuery)) {
                 <div class="radio-group-edit">
                     <?php foreach (['Owned','Rented','Living with Relatives','Mortgaged/Amortized','Others'] as $opt): ?>
                     <label>
-                        <input type="radio" name="applicant[HouseOwnership]" value="<?= $opt ?>" <?= $a['HouseOwnership'] === $opt ? 'checked' : '' ?>>
+                        <input type="radio" name="applicant_t[HouseOwnership]" value="<?= $opt ?>" <?= $a['HouseOwnership'] === $opt ? 'checked' : '' ?>>
                         <?= $opt ?>
                     </label>
                     <?php endforeach; ?>
@@ -183,7 +183,7 @@ while ($row = mysqli_fetch_assoc($guardianQuery)) {
             </div>
             <div class="view-field">
                 <label class="view-label">Gross Monthly Family Income</label>
-                <select class="edit-input" name="applicant[GrossMonthlyFamilyIncome]">
+                <select class="edit-input" name="applicant_t[GrossMonthlyFamilyIncome]">
                     <?php foreach (['Below 20000','20000-39999','40000-59999','60000+'] as $opt): ?>
                     <option value="<?= $opt ?>" <?= $a['GrossMonthlyFamilyIncome'] === $opt ? 'selected' : '' ?>><?= $opt ?></option>
                     <?php endforeach; ?>
@@ -205,25 +205,25 @@ while ($row = mysqli_fetch_assoc($guardianQuery)) {
                 </div>
                 <div class="view-field">
                     <label class="view-label">Relationship</label>
-                    <input class="edit-input" type="text" name="applicantguardian[Relationship][<?= $i ?>]" value="<?= htmlspecialchars($pg['Relationship']) ?>">
+                    <input class="edit-input" type="text" name="applicantguardian_t[Relationship][<?= $i ?>]" value="<?= htmlspecialchars($pg['Relationship']) ?>">
                 </div>
                 <div class="view-field">
                     <label class="view-label">Address</label>
-                    <input class="edit-input" type="text" name="parentguardian[Address][<?= $i ?>]" value="<?= htmlspecialchars($pg['Address']) ?>">
+                    <input class="edit-input" type="text" name="parentguardian_t[Address][<?= $i ?>]" value="<?= htmlspecialchars($pg['Address']) ?>">
                 </div>
                 <div class="view-field">
                     <label class="view-label">Occupation</label>
-                    <input class="edit-input" type="text" name="parentguardian[Occupation][<?= $i ?>]" value="<?= htmlspecialchars($pg['Occupation']) ?>">
+                    <input class="edit-input" type="text" name="parentguardian_t[Occupation][<?= $i ?>]" value="<?= htmlspecialchars($pg['Occupation']) ?>">
                 </div>
                 <div class="view-field">
                     <label class="view-label">Educational Attainment</label>
-                    <input class="edit-input" type="text" name="parentguardian[EducationalAttainment][<?= $i ?>]" value="<?= htmlspecialchars($pg['EducationalAttainment']) ?>">
+                    <input class="edit-input" type="text" name="parentguardian_t[EducationalAttainment][<?= $i ?>]" value="<?= htmlspecialchars($pg['EducationalAttainment']) ?>">
                 </div>
                 <div class="view-field">
                     <label class="view-label">Income Earner</label>
                     <div class="radio-group-edit">
-                        <label><input type="radio" name="applicantguardian[IsIncomeEarner][<?= $i ?>]" value="1" <?= $pg['IsIncomeEarner'] ? 'checked' : '' ?>> Yes</label>
-                        <label><input type="radio" name="applicantguardian[IsIncomeEarner][<?= $i ?>]" value="0" <?= !$pg['IsIncomeEarner'] ? 'checked' : '' ?>> No</label>
+                        <label><input type="radio" name="applicantguardian_t[IsIncomeEarner][<?= $i ?>]" value="1" <?= $pg['IsIncomeEarner'] ? 'checked' : '' ?>> Yes</label>
+                        <label><input type="radio" name="applicantguardian_t[IsIncomeEarner][<?= $i ?>]" value="0" <?= !$pg['IsIncomeEarner'] ? 'checked' : '' ?>> No</label>
                     </div>
                 </div>
             </div>

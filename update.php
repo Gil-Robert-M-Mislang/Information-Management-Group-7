@@ -3,42 +3,96 @@ include 'database.php';
 
 $conn->begin_transaction();
 
+echo $_SERVER['REQUEST_METHOD'];
+echo "<pre>";
+print_r($_POST);
+echo "</pre>";
+
 try {
-    $ApplicantID = mysqli_real_escape_string($conn, $_POST['ApplicantID']);
-    $contactNo = $_POST['applicant']['ContactNo'] ?? '';
+    $ApplicantID = $_POST['ApplicantID'];
+    echo "ApplicantID: $ApplicantID<br>";
+
+    $contactNo = $_POST['applicant_t']['ContactNo'] ?? '';
+
     if (!preg_match('/^\d{11}$/', $contactNo)) {
-        $conn->rollback();
-        echo "Error: Contact number must be exactly 11 digits.";
-        exit();
+        throw new Exception("Contact number must be exactly 11 digits.");
     }
 
-    // school 
+    echo "Contact number valid<br>";
+
+    // ==========================
+    // SCHOOL
+    // ==========================
     $schoolIDs = [];
+
     for ($i = 0; $i < 4; $i++) {
-        $name    = $_POST['school']['SchoolName'][$i];
-        $address = $_POST['school']['SchoolAddress'][$i];
 
-        $check = mysqli_query($conn, "SELECT SchoolID FROM school WHERE SchoolName = '" . mysqli_real_escape_string($conn, $name) . "' AND SchoolAddress = '" . mysqli_real_escape_string($conn, $address) . "'");
+        echo "School loop $i<br>";
 
-        if (mysqli_num_rows($check) > 0) {
-            $schoolIDs[$i] = mysqli_fetch_assoc($check)['SchoolID'];
+        $name = $_POST['school_t']['SchoolName'][$i];
+        $address = $_POST['school_t']['SchoolAddress'][$i];
+
+        $check = $conn->prepare("
+            SELECT SchoolID
+            FROM school_t
+            WHERE SchoolName = ?
+            AND SchoolAddress = ?
+        ");
+
+        $check->bind_param("ss", $name, $address);
+        $check->execute();
+
+        $result = $check->get_result();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $schoolIDs[$i] = $row['SchoolID'];
         } else {
-            $last = mysqli_query($conn, "SELECT SchoolID FROM school ORDER BY CAST(REGEXP_REPLACE(SchoolID,'[^0-9]','') AS UNSIGNED) DESC LIMIT 1");
+
+            $last = mysqli_query(
+                $conn,
+                "SELECT SchoolID
+                 FROM school_t
+                 ORDER BY SchoolID DESC
+                 LIMIT 1"
+            );
+
             $lastRow = mysqli_fetch_assoc($last);
-            $num = $lastRow ? preg_replace('/[^0-9]/', '', $lastRow['SchoolID']) + 1 : 1;
+
+            $num = $lastRow
+                ? preg_replace('/[^0-9]/', '', $lastRow['SchoolID']) + 1
+                : 1;
+
             $newID = 'S' . $num;
 
-            $ins = $conn->prepare("INSERT INTO school (SchoolID, SchoolName, SchoolAddress) VALUES (?, ?, ?)");
-            $ins->bind_param("sss", $newID, $name, $address);
+            $ins = $conn->prepare("
+                INSERT INTO school_t
+                (SchoolID, SchoolName, SchoolAddress)
+                VALUES (?, ?, ?)
+            ");
+
+            $ins->bind_param(
+                "sss",
+                $newID,
+                $name,
+                $address
+            );
+
             $ins->execute();
+
             $schoolIDs[$i] = $newID;
         }
     }
 
-    // applicant
-    $ap = $_POST['applicant'];
+    echo "Schools done<br>";
+
+    // ==========================
+    // APPLICANT
+    // ==========================
+    $ap = $_POST['applicant_t'];
+
     $stmt = $conn->prepare("
-        UPDATE applicant SET
+        UPDATE applicant_t SET
             ApplicantName = ?,
             Sex = ?,
             Citizenship = ?,
@@ -59,8 +113,9 @@ try {
             ElemID = ?
         WHERE ApplicantID = ?
     ");
+
     $stmt->bind_param(
-        "ssssssssssssssssssss",
+        "sssssssssssssssssss",
         $ap['ApplicantName'],
         $ap['Sex'],
         $ap['Citizenship'],
@@ -81,54 +136,82 @@ try {
         $schoolIDs[3],
         $ApplicantID
     );
+
     $stmt->execute();
 
-    // guardians
+    echo "Applicant updated<br>";
+
     $guardianIDs = $_POST['guardianID'];
+
     $pgCount = count($guardianIDs);
 
     for ($i = 0; $i < $pgCount; $i++) {
+
+        echo "Guardian loop $i<br>";
+
         $pgID = $guardianIDs[$i];
 
         $pgStmt = $conn->prepare("
-            UPDATE parentguardian SET
+            UPDATE parentguardian_t SET
                 ParentGuardianName = ?,
                 Address = ?,
                 Occupation = ?,
                 EducationalAttainment = ?
             WHERE ParentGuardianID = ?
         ");
+
         $pgStmt->bind_param(
             "sssss",
             $_POST['parentguardian']['ParentGuardianName'][$i],
-            $_POST['parentguardian']['Address'][$i],
-            $_POST['parentguardian']['Occupation'][$i],
-            $_POST['parentguardian']['EducationalAttainment'][$i],
+            $_POST['parentguardian_t']['Address'][$i],
+            $_POST['parentguardian_t']['Occupation'][$i],
+            $_POST['parentguardian_t']['EducationalAttainment'][$i],
             $pgID
         );
+
         $pgStmt->execute();
 
-        $isEarner = $_POST['applicantguardian']['IsIncomeEarner'][$i];
-        $rel = $_POST['applicantguardian']['Relationship'][$i];
+        echo "ParentGuardian updated<br>";
+
+        $isEarner =
+            (int) $_POST['applicantguardian_t']['IsIncomeEarner'][$i];
+
+        $rel =
+            $_POST['applicantguardian_t']['Relationship'][$i];
 
         $agStmt = $conn->prepare("
-            UPDATE applicantguardian SET
+            UPDATE applicantguardian_t SET
                 Relationship = ?,
                 IsIncomeEarner = ?
-            WHERE ApplicantID = ? AND ParentGuardianID = ?
+            WHERE ApplicantID = ?
+            AND ParentGuardianID = ?
         ");
-        $agStmt->bind_param("siss", $rel, $isEarner, $ApplicantID, $pgID);
+
+        $agStmt->bind_param(
+            "siss",
+            $rel,
+            $isEarner,
+            $ApplicantID,
+            $pgID
+        );
+
         $agStmt->execute();
+
+        echo "ApplicantGuardian updated<br>";
     }
 
-    $conn->commit();
-    mysqli_close($conn);
+    echo "About to commit<br>";
 
-    header("Location: menu.html?updated=1");
+    $conn->commit();
+
+    echo "COMMIT SUCCESSFUL";
     exit();
 
 } catch (Exception $e) {
+
     $conn->rollback();
-    echo "Error: " . $e->getMessage();
+
+    echo "<h2>ERROR</h2>";
+    echo $e->getMessage();
 }
 ?>

@@ -5,11 +5,11 @@
 
     $ApplicantID = $_POST['ApplicantID'];
 
-    $deleteApplicantGuardian = $conn->prepare("DELETE FROM applicantguardian WHERE ApplicantID = ?");
+    $deleteApplicantGuardian = $conn->prepare("DELETE FROM applicantguardian_t WHERE ApplicantID = ?");
     $deleteApplicantGuardian->bind_param("s", $ApplicantID);
     $deleteApplicantGuardian->execute();
 
-    $deleteApplicant = $conn->prepare("DELETE FROM applicant WHERE ApplicantID = ?");
+    $deleteApplicant = $conn->prepare("DELETE FROM applicant_t WHERE ApplicantID = ?");
     $deleteApplicant->bind_param("s", $ApplicantID);
     $deleteApplicant->execute();
 

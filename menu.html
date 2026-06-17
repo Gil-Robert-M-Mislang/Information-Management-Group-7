@@ -59,11 +59,11 @@
     </div>
 
     <div class="pagination-container">
-      <button id="prevBtn" class="pagination-btn">Previous</button>
+      <button id="prevBtn" class="pagination-btn hidden">Previous</button>
 
       <span id="pageInfo"> Page 1 </span>
 
-      <button id="nextBtn" class="pagination-btn">Next</button>
+      <button id="nextBtn" class="pagination-btn hidden">Next</button>
     </div>
      
     <!-- Modal structure -->
@@ -81,7 +81,31 @@
 
       let currentPage = 1;
 
+      function checkNextPage(page) {
+        const chosenValue = selectElement.value;
+
+        const searchInput = searchElement.value;
+
+        fetch(
+          "read.php?page=" +
+            (page + 1) +
+            "&searchInput=" +
+            searchInput +
+            "&sortSelect=" +
+            chosenValue,
+        )
+          .then((response) => response.text())
+          .then((data) => {
+            if (data.includes("No Records Found")) {
+              document.getElementById("nextBtn").style.display = "none";
+            } else {
+              document.getElementById("nextBtn").style.display = "inline-block";
+            }
+          });
+      }
+
       function loadPage(page) {
+        checkNextPage(page);
         const chosenValue = selectElement.value;
 
         const searchInput = searchElement.value;
@@ -95,15 +119,24 @@
             chosenValue,
         )
           .then((response) => response.text())
-
           .then((data) => {
             if (data.includes("No Records Found")) {
+              document.getElementById("nextBtn").style.display = "none";
               return; 
             }
 
             document.getElementById("studentTableBody").innerHTML = data;
             currentPage = page;
             document.getElementById("pageInfo").textContent = "Page " + currentPage;
+
+            if(currentPage === 1){
+              document.getElementById("prevBtn").style.display = "none";
+
+            } else {
+              document.getElementById("prevBtn").style.display = "inline-block";
+            }
+
+            document.getElementById("nextBtn").style.display = "inline-block";
           });
       }
 
@@ -128,7 +161,7 @@
       document.getElementById("prevBtn").addEventListener("click", () => {
         if (currentPage > 1) {
           loadPage(currentPage - 1);
-        }
+        } 
       });
 
       // modal functionalities
