@@ -5,6 +5,12 @@ $conn->begin_transaction();
 
 try {
     $ApplicantID = mysqli_real_escape_string($conn, $_POST['ApplicantID']);
+    $contactNo = $_POST['applicant']['ContactNo'] ?? '';
+    if (!preg_match('/^\d{11}$/', $contactNo)) {
+        $conn->rollback();
+        echo "Error: Contact number must be exactly 11 digits.";
+        exit();
+    }
 
     // school 
     $schoolIDs = [];
@@ -39,7 +45,6 @@ try {
             IndigenousGroup = ?,
             CivilStatus = ?,
             ContactNo = ?,
-            EmailAddress = ?,
             BirthPlace = ?,
             BirthOrder = ?,
             BirthDate = ?,
@@ -62,7 +67,6 @@ try {
         $ap['IndigenousGroup'],
         $ap['CivilStatus'],
         $ap['ContactNo'],
-        $ap['EmailAddress'],
         $ap['BirthPlace'],
         $ap['BirthOrder'],
         $ap['BirthDate'],

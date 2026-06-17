@@ -74,11 +74,19 @@ while ($row = mysqli_fetch_assoc($guardianQuery)) {
             </div>
             <div class="view-field">
                 <label class="view-label">Email Address</label>
-                <input class="edit-input" type="email" name="applicant[EmailAddress]" value="<?= htmlspecialchars($a['EmailAddress']) ?>" required>
+                <input class="edit-input" type="email" name="applicant[EmailAddress]" 
+                    value="<?= htmlspecialchars($a['EmailAddress']) ?>"
+                    readonly
+                    style="background:#f0f0f0; cursor:not-allowed; opacity:0.7;"
+                    title="Email address cannot be changed">
             </div>
             <div class="view-field">
                 <label class="view-label">Contact Number</label>
-                <input class="edit-input" type="text" name="applicant[ContactNo]" value="<?= htmlspecialchars($a['ContactNo']) ?>" required>
+                <input class="edit-input" type="text" name="applicant[ContactNo]" 
+                    value="<?= htmlspecialchars($a['ContactNo']) ?>"
+                    pattern="\d{11}" maxlength="11" title="Contact number must be exactly 11 digits"
+                    inputmode="numeric" oninput="this.value=this.value.replace(/\D/g,'')"
+                required>
             </div>
             <div class="view-field">
                 <label class="view-label">Citizenship</label>
